@@ -1,0 +1,221 @@
+package testing;
+
+public class TestClass {
+
+	private static int countingValleys(int n, String s) {
+
+        int seaLevel = 0;
+
+        int qtyValleys = 0;
+
+        int i;
+
+        System.out.println("Cantidad de Pasos: " + n);
+        System.out.println("Recorrido: " + s);
+        
+        
+        for(i = 0; i < s.length(); i ++){
+
+        	System.out.println("Iter I en posición: " + i);
+        	
+            char step = s.charAt(i);
+
+            System.out.println("Estamos dando el paso: " + step);
+            
+            
+            if(step == 'D' && seaLevel == 0){
+
+                seaLevel -= 1;
+                qtyValleys += 1;
+
+                System.out.println("Estamos recorriendo el valle número: " + qtyValleys);
+                System.out.println("Estamos en el nivel del mar número: " + seaLevel);
+                
+                //En esta parte itero el valle, hasta llegar de nuevo al nivel del mar
+                //Para no volver a contar ese valle.
+                int j;
+                for(j = i + 1; seaLevel < 0; j++){
+                    
+                	System.out.println("****Iterando valle****");
+                	
+                	System.out.println("valor de j: " + j);
+                	
+                    char valleyStep = s.charAt(j);
+
+                    System.out.println("Dando paso en el valle: " + valleyStep);
+                    
+                    if(valleyStep == 'D'){
+                        seaLevel -= 1;
+                    }else{
+                        seaLevel += 1;
+                    }
+                    
+                    System.out.println("Nivel del mar: " + seaLevel);
+                }
+                
+                System.out.println("Si llegamos acá significa que estamos en el nivel 0 del mar");
+                
+                i = j - 1;
+                
+                System.out.println("Valor del iter i en el nivel cero del valle: " + i);
+
+            }else if(step == 'U' && seaLevel == 0){
+                
+                seaLevel += 1;
+
+                System.out.println("Estamos en una montania");
+                
+                System.out.println("Estamos en el nivel del mar número: " + seaLevel);
+                
+                int k;
+
+                for(k = i + 1; seaLevel > 0; k++){
+
+                    char mountainStep = s.charAt(k);
+
+                	System.out.println("****Iterando montania****");
+                	
+                	System.out.println("valor de k: " + k);
+                    
+                    if(mountainStep == 'U'){
+                        seaLevel += 1;
+                    }else{
+                        seaLevel -= 1;
+                    }
+                    
+                    System.out.println("Nivel del Mar: " + seaLevel);
+                }
+
+                System.out.println("Terminamos de iterar la montania");
+                
+                i = k - 1;
+                
+                System.out.println("La iter i, quedo con valor: " + i);
+            }            
+        }
+
+        
+        
+        return qtyValleys;
+    }
+	
+//	public static void main(String[] args) {
+//		
+//		String recorrido = "DDDDDDDDUUUUUUUUDU";
+//		
+//		int pasos = recorrido.length();
+//		
+//		
+//		
+////		String recorrido = "DUDDUU";
+//		
+//		System.out.println("Cantidad de Valles recorridos: " 
+//					+ countingValleys(pasos, recorrido));
+//		
+//		int[] array = new int[3];
+//		array[0] = 1;
+//		array[1] = 1;
+//		array[2] = 1;
+//		
+//		System.out.println(array.length);
+//	}	
+	
+	private static final int saltos(int[] c) {
+		
+        int size = c.length;
+
+        int minorQty = 0;
+
+        int jumpSize = 0;
+
+        for(int i = 0; i < size; i += jumpSize){
+
+        	jumpSize = 1;
+        	
+        	//Si hay dos nubes disponibles, evaluo si puedo saltar dos.
+            if(hasTwoCloudsAvailable(i + 1, size)){
+
+                if(c[i+2] == 0){
+                    jumpSize = 2;
+                }            
+            }
+            
+            //Si estoy parado en la última nube, significa que gané, por lo tanto no salto.
+            if(i != (size - 1)) {
+                minorQty += 1;           	
+            }
+        }
+
+        return minorQty;
+		
+	}
+
+    private static final boolean hasTwoCloudsAvailable(int actual, int qtyClouds){
+        return  (qtyClouds - actual) >= 2 ;
+    }
+
+	
+	public static void main(String[] args) {
+		
+		System.out.println("resultado: "+  repeatedString("bba", Long.valueOf("10")));
+		
+		int value = 11;
+		
+		int otherValue = 4;
+		
+		System.out.println("utilizando el /: " + value / otherValue);
+		
+		System.out.println("utilizando el porcentaje: " + value % otherValue);
+		
+	}
+	
+    static long repeatedString(String s, long n) {
+
+    	Long repetitions = Long.valueOf("0");
+    	
+    	//Evaluamos si n es menor que el size de la palabra
+    	int wordSize = s.length();
+    	
+    	if(n <= wordSize) {
+    		repetitions = Long.valueOf(aQtys(s.substring(0, Long.valueOf(n).intValue())));
+    	}else {
+    		repetitions = Long.valueOf(calculateAsInLongerWord(s, n));
+    	}
+    	
+    	return repetitions;
+    }
+
+    static int calculateAsInLongerWord(String s, long n) {
+    	
+    	int qty = 0;
+    	
+    	int intN = Long.valueOf(n).intValue();
+    	
+    	int wordSize = s.length();
+    	
+    	int division = intN / wordSize;
+    	
+    	int diff = intN - (division * wordSize);
+    	
+    	int aQtyInWord = aQtys(s);
+    	
+    	int aQtyInInfinitiWord = aQtyInWord * division;
+    	
+    	int aQtyInRestWords = aQtys(s.substring(0, diff));
+    	
+    	return aQtyInInfinitiWord + aQtyInRestWords;
+    	
+    }
+    
+    static int aQtys(String word) {
+    	int qty = 0;
+    	
+    	for(int i = 0; i < word.length(); i ++) {
+    		if(word.charAt(i) == 'a') {
+    			qty += 1;
+    		}
+    	}
+    	
+    	return qty;
+    }
+}

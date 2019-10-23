@@ -1,0 +1,6 @@
+package main.clases.tiposEmpleados;
+
+public interface TipoEmpleadoInterface {
+
+	public long recuperarNivelJerarquia();
+}

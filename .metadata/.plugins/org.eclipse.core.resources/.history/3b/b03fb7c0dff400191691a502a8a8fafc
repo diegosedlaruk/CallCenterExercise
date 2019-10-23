@@ -1,0 +1,25 @@
+package main.clases;
+
+import main.clases.tiposEmpleados.TipoEmpleadoInterface;
+
+public class TipoEmpleado implements TipoEmpleadoInterface {
+
+	private String tipo;
+	
+	private long nivelJerarquia;
+	
+	public TipoEmpleado(String tipoEmpleado, long nivelJerarquia) {
+		this.tipo = tipoEmpleado;
+		this.nivelJerarquia = nivelJerarquia;
+	}
+	
+	@Override
+	public String recuperarTipoEmpleado() {
+		return this.tipo;
+	}
+
+	@Override
+	public long recuperarNivelJerarquia() {
+		return 0;
+	}
+}

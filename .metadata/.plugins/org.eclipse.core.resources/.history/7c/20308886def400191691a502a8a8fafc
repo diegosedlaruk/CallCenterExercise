@@ -1,0 +1,12 @@
+package main.clases.tiposEmpleados;
+
+import main.clases.TipoEmpleado;
+
+public class Director extends TipoEmpleado{
+
+	public Director() {
+		super("Director");
+		// TODO Auto-generated constructor stub
+	}
+
+}

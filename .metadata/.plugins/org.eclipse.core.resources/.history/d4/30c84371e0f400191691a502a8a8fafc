@@ -1,0 +1,5 @@
+package main.clases.tiposEmpleados.jerarquia;
+
+public enum JerarquiasEmpleadosEnum {
+
+}

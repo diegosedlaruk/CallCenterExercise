@@ -1,0 +1,5 @@
+package main.clases.tiposEmpleados;
+
+public interface EmpleadoInterface extends Empleado{
+
+}

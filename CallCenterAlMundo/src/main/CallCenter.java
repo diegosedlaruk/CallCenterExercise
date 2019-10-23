@@ -1,0 +1,34 @@
+package main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+
+public class CallCenter {
+
+	/**
+	 * Procesar llamadas recibe una lista de llamadas, las itera e invoca al call dispatcher que se encarga de 
+	 * repartir las llamadas a los usuarios disponibles.
+	 * @param llamadas
+	 * @param empleados
+	 */
+	public void procesarLlamadas(List<LlamadaCallCenter> llamadas, ArrayList<Empleado> empleados) {
+		
+		for(LlamadaCallCenter llamada : llamadas) {
+
+			//Un hilo
+			CallDispatcher cd = new CallDispatcher(llamada, empleados);
+			cd.start();
+
+			//1 segundo es lo que tarda una llamada desde que se realiza hasta que encuentra un empleado libre.
+			try {
+				Thread.sleep(1 * 1000);
+			} catch (InterruptedException e) {
+				
+			}	
+		}
+	}	
+}

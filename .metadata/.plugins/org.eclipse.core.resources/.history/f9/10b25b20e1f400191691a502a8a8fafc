@@ -1,0 +1,32 @@
+package main.clases.tiposEmpleados.jerarquia;
+
+public enum JerarquiasEmpleadosEnum {  
+	
+	ROBLE ("Castaño verdoso", 800)
+
+
+    //Campos tipo constante   
+
+    private final String color; //Color de la madera
+
+    private final int pesoEspecifico; //Peso específico de la madera
+
+ 
+
+    /**
+
+     * Constructor. Al asignarle uno de los valores posibles a una variable del tipo enumerado el constructor asigna 
+
+        automáticamente valores de los campos
+
+     */ 
+
+    public JerarquiasEmpleadosEnum () {}
+
+ 
+
+    //Métodos de la clase tipo Enum
+
+    public String getColor() { return color; }
+
+    public int getPesoEspecifico() { return pesoEspecifico; }}

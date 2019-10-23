@@ -1,0 +1,103 @@
+package main.clases;
+
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+public class CallDispatcher extends Thread{
+	
+	private static final int WAITING_SECONDS = 5;
+	
+	private static final int MAX_REINTENTOS = 5;
+		
+	private LlamadaCallCenter llamada;
+	
+	private List<Empleado> empleados;
+	
+	public CallDispatcher(LlamadaCallCenter llamada, List<Empleado> empleados) {
+		this.llamada = llamada;
+		this.empleados = empleados;
+	}
+		
+	public void run() {
+			dispatchCall(llamada, empleados);
+	}
+	
+	private void dispatchCall(LlamadaCallCenter llamada, List<Empleado> empleados) {
+		
+		boolean seAtendioLlamada = false;
+		
+		int iteracionesMaxima = CallDispatcher.MAX_REINTENTOS;
+		
+		Empleado empleadoLibre;
+		
+		int iter = 0;
+		
+		while(!seAtendioLlamada && iter < iteracionesMaxima) {
+			
+			empleadoLibre = getEmpleadoLibre(empleados);
+			
+			if(empleadoLibre != null) {
+				
+				System.out.println("Hilo: " + getName() + empleadoLibre.getNombre() + " atendió la llamada: " + llamada.idLlamada() + " . La llamada durará: " + llamada.getDuracionLlamada());
+				
+				seAtendioLlamada = true;
+				
+				empleadoLibre.atenderLlamada(llamada);	
+				
+			}else {
+				
+				System.out.println("Hilo: " + getName() + " -------- en espera --------");
+				
+				try {
+					Thread.sleep(WAITING_SECONDS * 1000);
+				} catch (InterruptedException e) {
+					System.out.println("Hilo: " + getName() +"Ocurrió un error esperando que se desocupe un empleado. Llamada: " + llamada);
+				}	
+				
+				System.out.println("Hilo: " + getName() + "---------- reintentando ---------");
+			}
+			
+			iter ++;
+		}
+		
+		if(seAtendioLlamada) {
+			System.out.println("Hilo: " + getName() + "************  La llamada se atendió correctamente. Cortando  ****************");
+		}else {
+			System.out.println("Hilo: " + getName() + " !--> la llamada no se atendió, no se encontraron empleados disponibles. <--! ");
+		}
+	}
+			
+	private Empleado getEmpleadoLibre(List<Empleado> empleados) {
+		
+		Empleado empleadoLibre;
+		
+		System.out.println("Hilo: " + getName() + "buscando empleados");
+		
+		List<Empleado> empleadosLibres = this.filter(empleado -> empleado.getTipo().esOperador() && empleado.puedeAtenderLLamada(), empleados);
+		
+		//Si no conseguimos operadores libres, buscamos supervisores libres.
+		if(empleadosLibres.isEmpty()) {
+			
+			System.out.println("Hilo: " + getName() + " . No se encontraron operadores, buscando supervisores.");
+			
+			empleadosLibres = this.filter(empleado -> empleado.getTipo().esSupervisor() && empleado.puedeAtenderLLamada(), empleados);
+
+			//Si no conseguimos operadores libres, buscamos supervisores libres.
+			if(empleadosLibres.isEmpty()) {
+				
+				System.out.println("Hilo: " + getName() + " . No se encontraron supervisores, buscando directores.");
+				
+				empleadosLibres = this.filter(empleado -> empleado.getTipo().esDirector() && empleado.puedeAtenderLLamada(), empleados);
+			}
+		}
+		
+		empleadoLibre = !empleadosLibres.isEmpty() ? empleadosLibres.get(0) : null; 
+		
+		return empleadoLibre;
+	}
+	 
+	private List<Empleado> filter(Predicate<Empleado> criteria, List<Empleado> list) {
+	        return list.stream().filter(criteria).collect(Collectors.<Empleado>toList());
+	}
+}

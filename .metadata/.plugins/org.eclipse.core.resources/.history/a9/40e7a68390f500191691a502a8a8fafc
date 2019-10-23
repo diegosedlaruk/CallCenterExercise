@@ -1,0 +1,52 @@
+package main.tests;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import junit.framework.Assert;
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Director;
+import main.clases.tiposEmpleados.Operador;
+import main.clases.tiposEmpleados.Supervisor;
+
+class CallCenterTest {
+
+	private Operador operadorUno;
+	
+	private Operador operadorDos;
+	
+	private Supervisor supervisor;
+	
+	private Director director;
+	
+	@Test
+	void operadorAtiendeLlamadaYEstaOcupado() {
+		
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+		
+		operadorUno = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		empleados.add(operadorUno);
+		
+		CallDispatcher cd = new CallDispatcher(llamada, empleados);
+		
+		cd.start();
+		
+		assertTrue(operadorUno.atendiendoLlamada());
+		assertEquals(operadorUno.getIdLlamada(), llamada.idLlamada());
+	}
+	
+	
+	@Test
+	void testResta() {
+		assertEquals(5, 10 - 2 - 2 - 1);
+	}
+}

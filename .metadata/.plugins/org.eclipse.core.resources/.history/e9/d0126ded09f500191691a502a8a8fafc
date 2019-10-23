@@ -1,0 +1,112 @@
+package main.tests;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Director;
+import main.clases.tiposEmpleados.Operador;
+import main.clases.tiposEmpleados.Supervisor;
+
+public class DiegoTest {
+
+	public static void main(String[] args) {
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		
+		Operador wilfredo = new Operador("Wilfredo", "Rosamonte", "379988912", "AA82JK21");
+		Operador carlos = new Operador("Carlos", "Zapata", "27889110", "BK1990PO");
+		Operador diego = new Operador("Diego", "Sedlaruk", "37009123", "BK1MM0PO");
+		Supervisor julieta = new Supervisor("Julieta", "Riella", "18778662", "PPO22212");
+		Director capataz = new Director("Lucas", "Gomez", "25118281", "2ACJD112");		
+		
+		empleados.add(capataz);
+		empleados.add(carlos);
+		empleados.add(wilfredo);
+		empleados.add(diego);
+		empleados.add(julieta);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		
+		
+		//Id iteracion
+		int i = 0;
+		
+		for(LlamadaCallCenter llamada : llamadas) {
+			
+			System.out.println("*******Telefono sonando******");
+			
+			CallDispatcher dispatcher = new CallDispatcher(llamada, empleados);
+			System.out.println("El hilo: " + dispatcher.getName() + " esta procesando la llamada: " + llamada.idLlamada() + ". Id de Iteracion: " + i);
+			dispatcher.start();
+			i++;
+			
+			//Entre cada llamado esperamos 3 segundos.
+			try {
+				Thread.sleep(3 * 1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("Termino el turno de las 18:00 apagando telefonos");
+		
+		boolean terminaronTodos = false;
+		
+		while(!terminaronTodos) {
+			
+			System.out.println("Esperando que terminen las llamadas en curso");
+			
+			for(Empleado empleado : empleados) {
+				terminaronTodos = empleado.atendiendoLlamada() ? false : true;
+			}
+			
+			System.out.println("Terminaron todos? -> " + terminaronTodos);
+		}
+		
+		for(Empleado empleado : empleados) {
+			System.out.println("El empleado empleado: " + empleado.getNombre() + " atendió: " + empleado.getCantidadLlamadosAtendidos() + " llamadas");
+		}
+	}
+}

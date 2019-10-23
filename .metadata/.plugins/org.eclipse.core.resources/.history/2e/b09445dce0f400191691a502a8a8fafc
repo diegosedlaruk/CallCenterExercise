@@ -1,0 +1,6 @@
+package main.clases.tiposEmpleados.jerarquia;
+
+public enum JerarquiasEmpleadosEnum {
+
+	JERARQUIA_DIRECTOR = 1000
+}

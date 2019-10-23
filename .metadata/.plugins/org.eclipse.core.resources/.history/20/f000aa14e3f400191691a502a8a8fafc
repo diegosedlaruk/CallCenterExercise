@@ -1,0 +1,13 @@
+package main.clases.tiposEmpleados;
+
+import main.clases.TipoEmpleado;
+import main.clases.tiposEmpleados.jerarquia.JerarquiasEmpleadosEnum;
+
+public class Supervisor extends TipoEmpleado{
+
+	private static final JerarquiasEmpleadosEnum NIVEL_JERARQUIA = JerarquiasEmpleadosEnum.SUPERVISOR;
+	
+	public Supervisor() {
+		super("Supervisor", Supervisor.NIVEL_JERARQUIA);
+	}
+}

@@ -1,0 +1,299 @@
+package main.tests;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import main.CallCenter;
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Director;
+import main.clases.tiposEmpleados.Operador;
+import main.clases.tiposEmpleados.Supervisor;
+
+class CallCenterTest {
+		
+	private static final int MILISECONDS = 1000;
+	
+	private static final int CALL_DURATION = 10;
+	
+	@Test
+	void llamadaDuraEntreCincoDiezSegundos() {
+
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		assertTrue(llamada.getDuracionLlamada() >= 5 && llamada.getDuracionLlamada() <= 10);
+	}
+	
+	@Test
+	void operadorAtiendeLlamadaYNoPuedeAtenderOtra() {
+
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		
+		CallCenter callCenter = new CallCenter(); 
+		callCenter.procesarLlamadas(llamadas, empleados);
+		
+		assertFalse(operadorLucas.puedeAtenderLLamada());
+	}
+	
+	@Test
+	void operadorAtiendeDosLlamados() {
+		
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+		
+		CallCenter callCenter = new CallCenter();
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+
+		llamadas.add(llamada);
+		llamadas.add(otraLlamada);
+		
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		//Esperamos a que se terminen de procesar las dos llamadas para contarlas.
+		try {
+			Thread.sleep(2 * CALL_DURATION * MILISECONDS);
+		} catch (InterruptedException e) {
+			
+		}	
+		
+		assertTrue(operadorLucas.getCantidadLlamadosAtendidos() == 2);
+		
+	}
+	
+	@Test
+	void dosOperadoresAtiendenUnaLlamadaCadaUno() {
+
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+		
+		Operador operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		empleados.add(operadorLautaro);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		llamadas.add(otraLlamada);
+		
+		CallCenter callCenter = new CallCenter();
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		//Esperamos a que se terminen de procesar las dos llamadas para contarlas.
+		try {
+			Thread.sleep(CALL_DURATION * MILISECONDS);
+		} catch (InterruptedException e) {
+			
+		}
+		
+		assertTrue(operadorLucas.getCantidadLlamadosAtendidos() == 1);
+		assertTrue(operadorLautaro.getCantidadLlamadosAtendidos() == 1);
+		
+	}
+	
+	@Test
+	void supervisorAtiendeLlamada() {
+		
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+		LlamadaCallCenter tercerLlamada = new LlamadaCallCenter();
+		
+		Operador operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		Supervisor supervisorAlejandro = new Supervisor("Alejandro", "Gutierrez", "29767446", "YH65C");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		empleados.add(operadorLautaro);
+		empleados.add(supervisorAlejandro);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		llamadas.add(otraLlamada);
+		llamadas.add(tercerLlamada);
+		
+		CallCenter callCenter = new CallCenter();
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		//Esperamos a que se terminen de procesar las llamadas.
+		try {
+			Thread.sleep(CALL_DURATION * MILISECONDS);
+		} catch (InterruptedException e) {
+			
+		}
+		
+		assertTrue(supervisorAlejandro.getCantidadLlamadosAtendidos() == 1);
+	}
+	
+	@Test
+	void supervisorNoAtiendeLlamadaPorqueHayoperadoresDisponibles() {
+		
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+		
+		Operador operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		Supervisor supervisorAlejandro = new Supervisor("Alejandro", "Gutierrez", "29767446", "YH65C");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		empleados.add(operadorLautaro);
+		empleados.add(supervisorAlejandro);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		llamadas.add(otraLlamada);
+		
+		CallCenter callCenter = new CallCenter();
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		//Esperamos a que se terminen de procesar las llamadas.
+		try {
+			Thread.sleep(CALL_DURATION * MILISECONDS);
+		} catch (InterruptedException e) {
+			
+		}
+		
+		assertTrue(supervisorAlejandro.getCantidadLlamadosAtendidos() == 0);
+	}
+	
+	@Test
+	void directorAtiendeLlamada() {
+
+			LlamadaCallCenter llamada = new LlamadaCallCenter();
+			LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+			LlamadaCallCenter tercerLlamada = new LlamadaCallCenter();
+			LlamadaCallCenter cuartaLlamada = new LlamadaCallCenter();
+			
+			Operador operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+			Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+			Supervisor supervisorAlejandro = new Supervisor("Alejandro", "Gutierrez", "29767446", "YH65C");
+			Director directorMarcos = new Director("Marcos", "Sotomonte", "31999987", "K18ZW");
+			
+			 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+			empleados.add(operadorLucas);
+			empleados.add(operadorLautaro);
+			empleados.add(supervisorAlejandro);
+			empleados.add(directorMarcos);
+			
+			List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+			llamadas.add(llamada);
+			llamadas.add(otraLlamada);
+			llamadas.add(tercerLlamada);
+			llamadas.add(cuartaLlamada);
+			
+			CallCenter callCenter = new CallCenter();
+			callCenter.procesarLlamadas(llamadas, empleados);
+
+			//Esperamos a que se terminen de procesar las llamadas.
+			try {
+				Thread.sleep(CALL_DURATION * MILISECONDS);
+			} catch (InterruptedException e) {
+				
+			}
+			
+			assertTrue(directorMarcos.getCantidadLlamadosAtendidos() == 1);
+		}
+	
+
+	@Test
+	void directorNoAtiendePorSupervisoresYOperadoresLibres() {
+
+			LlamadaCallCenter llamada = new LlamadaCallCenter();
+			LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+			LlamadaCallCenter tercerLlamada = new LlamadaCallCenter();
+			
+			Operador operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+			Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+			Supervisor supervisorAlejandro = new Supervisor("Alejandro", "Gutierrez", "29767446", "YH65C");
+			Director directorMarcos = new Director("Marcos", "Sotomonte", "31999987", "K18ZW");
+			
+			 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+			empleados.add(operadorLucas);
+			empleados.add(operadorLautaro);
+			empleados.add(supervisorAlejandro);
+			empleados.add(directorMarcos);
+			
+			List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+			llamadas.add(llamada);
+			llamadas.add(otraLlamada);
+			llamadas.add(tercerLlamada);
+			
+			CallCenter callCenter = new CallCenter();
+			callCenter.procesarLlamadas(llamadas, empleados);
+
+			//Esperamos a que se terminen de procesar las llamadas.
+			try {
+				Thread.sleep(CALL_DURATION * MILISECONDS);
+			} catch (InterruptedException e) {
+				
+			}
+			
+			assertTrue(directorMarcos.getCantidadLlamadosAtendidos() == 0);
+		}
+	
+	@Test
+	void realizarDiezLlamadas() {
+		
+		
+		Operador operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		Supervisor supervisorAlejandro = new Supervisor("Alejandro", "Gutierrez", "29767446", "YH65C");
+		Director directorMarcos = new Director("Marcos", "Sotomonte", "31999987", "K18ZW");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		empleados.add(operadorLautaro);
+		empleados.add(supervisorAlejandro);
+		empleados.add(directorMarcos);
+		
+		CallCenter callCenter = new CallCenter();
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		//Esperamos a que se terminen de procesar las llamadas.
+		try {
+			Thread.sleep(CALL_DURATION * MILISECONDS);
+		} catch (InterruptedException e) {
+			
+		}
+		
+		assertTrue(directorMarcos.getCantidadLlamadosAtendidos() == 0);
+			
+	}
+}

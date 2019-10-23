@@ -1,0 +1,20 @@
+package main.clases;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CallCenter {
+
+	private List<Empleado> empleados = new ArrayList<Empleado>();
+	
+	public CallCenter(List<Empleado> empleados) {
+		this.empleados = empleados;
+	} 
+	
+	public Empleado getEmpleadoLibre() {
+		
+		Empleado empleado = new Empleado(nombre, apellido, dni, identificadorEpleado, tipo);
+		
+		return empleado;
+	}
+}

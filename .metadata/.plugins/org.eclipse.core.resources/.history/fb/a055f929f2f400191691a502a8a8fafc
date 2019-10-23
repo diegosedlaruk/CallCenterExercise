@@ -1,0 +1,12 @@
+package main.clases.tiposEmpleados;
+
+import main.clases.tiposEmpleados.jerarquiaEmpleados.JerarquiasEmpleadosEnum;
+
+public class Operador implements Empleado{
+
+	private static final TipoEmpleado tipoEmpleado = new TipoEmpleado("Operador", JerarquiasEmpleadosEnum.OPERADOR);
+	
+	public Operador(String nombre, String apellido, String dni, String identificadorEpleado) {
+		super(nombre, apellido, dni, identificadorEpleado, tipoEmpleado);
+	}
+}

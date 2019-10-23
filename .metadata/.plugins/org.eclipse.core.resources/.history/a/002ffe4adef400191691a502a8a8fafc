@@ -1,0 +1,10 @@
+package main.clases;
+
+public class TipoEmpleado {
+
+	private String tipo;
+	
+	public TipoEmpleado(String tipoEmpleado) {
+		tipo = tipoEmpleado;
+	}
+}

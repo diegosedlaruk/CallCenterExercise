@@ -1,0 +1,100 @@
+package main.clases;
+
+import main.clases.tiposEmpleados.TipoEmpleado;
+
+public class Empleado {
+
+	private String nombre;
+
+	private String apellido;
+
+	private String dni;
+
+	private String identificadorEpleado;
+
+	private TipoEmpleado tipo;
+
+	boolean atendiendoLlamada = false;
+
+	public Empleado(String nombre, String apellido, String dni, String identificadorEpleado, TipoEmpleado tipo) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.identificadorEpleado = identificadorEpleado;
+		this.tipo = tipo;
+	}
+
+	boolean puedeAtenderLLamada() {
+		return !atendiendoLlamada;
+	}
+
+	public void atenderLlamada(LlamadaCallCenter llamada) {
+
+		//El usuario
+		this.atendiendoLlamada = true;
+
+		//Atendemos la llamada.
+		this.atendiendoLlamada(llamada.getDuracionLlamada());
+		
+		this.atendiendoLlamada = false;
+	}
+
+	private void atendiendoLlamada(int duracionLlamada) {
+				
+		try {
+			Thread.sleep(duracionLlamada * 1000);
+		} catch (InterruptedException e) {
+			//Cualquier error que haya en la comunicación, el empleado debe cortar para no dejar la línea ocupada.
+			this.atendiendoLlamada = false;
+		}
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getIdentificadorEpleado() {
+		return identificadorEpleado;
+	}
+
+	public void setIdentificadorEpleado(String identificadorEpleado) {
+		this.identificadorEpleado = identificadorEpleado;
+	}
+
+	public TipoEmpleado getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoEmpleado tipo) {
+		this.tipo = tipo;
+	}
+
+	public boolean isAtendiendoLlamada() {
+		return atendiendoLlamada;
+	}
+
+	public void setAtendiendoLlamada(boolean atendiendoLlamada) {
+		this.atendiendoLlamada = atendiendoLlamada;
+	}
+}

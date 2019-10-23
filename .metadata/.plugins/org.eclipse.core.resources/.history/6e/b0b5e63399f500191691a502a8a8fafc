@@ -1,0 +1,102 @@
+package main.tests;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import junit.framework.Assert;
+import main.CallCenter;
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Director;
+import main.clases.tiposEmpleados.Operador;
+import main.clases.tiposEmpleados.Supervisor;
+
+class CallCenterTest {
+	
+	private CallCenter callCenter = new CallCenter();
+	
+	private LlamadaCallCenter llamada = new LlamadaCallCenter();
+	
+	private LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+	
+	private Operador lucas;
+	
+	@Test
+	void llamadaDuraEntreCincoDiezSegundos() {
+
+		assertTrue(llamada.getDuracionLlamada() >= 5 && llamada.getDuracionLlamada() <= 10);
+	}
+	
+	@Test
+	void operadorAtiendeLlamadaYNoPuedeAtenderOtra() {
+
+		lucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(lucas);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		
+		callCenter.procesarLlamadas(llamadas, empleados);
+		
+		assertFalse(lucas.puedeAtenderLLamada());
+	}
+	
+	@Test
+	void operadorAtiendeDosLlamados() {
+		
+		lucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(lucas);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		assertTrue(lucas.getCantidadLlamadosAtendidos() == 2);
+		
+	}
+	
+	@Test
+	void dosOperadoresAtiendenUnaLlamadaCadaUno() {
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		LlamadaCallCenter otraLlamada = new LlamadaCallCenter();
+				
+		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+		
+		Operador operadorUno = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		empleados.add(operadorUno);
+		
+		for(LlamadaCallCenter elem : llamadas) {
+
+			//Un hilo
+			CallDispatcher cd = new CallDispatcher(llamada, empleados);
+			cd.start();
+
+			//1 segundo es lo que tarda una llamada desde que se realiza hasta que encuentra un empleado libre.
+			try {
+				Thread.sleep(1 * 1000);
+			} catch (InterruptedException e) {
+				
+			}	
+		
+			
+		}
+		
+
+		
+	}
+}

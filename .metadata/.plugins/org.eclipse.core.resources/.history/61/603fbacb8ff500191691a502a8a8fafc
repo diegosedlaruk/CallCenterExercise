@@ -1,0 +1,32 @@
+package main.tests;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+
+class CallCenterTest {
+
+	@Test
+	void operadorAtiendeLlamadaYEstaOcupado() {
+		
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+		
+		CallDispatcher cd = new CallDispatcher(llamada, empleados);
+		
+		assertEquals(2, 1 + 1);
+	}
+	
+	
+	@Test
+	void testResta() {
+		assertEquals(5, 10 - 2 - 2 - 1);
+	}
+}

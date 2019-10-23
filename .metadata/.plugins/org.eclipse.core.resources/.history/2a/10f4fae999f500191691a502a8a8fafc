@@ -1,0 +1,84 @@
+package main.tests;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import main.CallCenter;
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Operador;
+
+class CallCenterTest {
+		
+	@Test
+	void llamadaDuraEntreCincoDiezSegundos() {
+
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		assertTrue(llamada.getDuracionLlamada() >= 5 && llamada.getDuracionLlamada() <= 10);
+	}
+	
+	@Test
+	void operadorAtiendeLlamadaYNoPuedeAtenderOtra() {
+
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		Operador operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		
+		CallCenter callCenter = new CallCenter(); 
+		callCenter.procesarLlamadas(llamadas, empleados);
+		
+		assertFalse(operadorLucas.puedeAtenderLLamada());
+	}
+	
+	@Test
+	void operadorAtiendeDosLlamados() {
+		
+		operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		llamadas.add(otraLlamada);
+		
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		assertTrue(operadorLucas.getCantidadLlamadosAtendidos() == 2);
+		
+	}
+	
+	@Test
+	void dosOperadoresAtiendenUnaLlamadaCadaUno() {
+
+		operadorLautaro = new Operador("Lautaro", "Perez", "18776487", "00ALR");
+		operadorLucas = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		
+		 ArrayList<Empleado> empleados  = new ArrayList<Empleado>();
+		empleados.add(operadorLucas);
+		empleados.add(operadorLautaro);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		llamadas.add(llamada);
+		llamadas.add(otraLlamada);
+		
+		callCenter.procesarLlamadas(llamadas, empleados);
+
+		assertTrue(operadorLucas.getCantidadLlamadosAtendidos() == 1);
+		assertTrue(operadorLautaro.getCantidadLlamadosAtendidos() == 1);
+		
+	}
+}

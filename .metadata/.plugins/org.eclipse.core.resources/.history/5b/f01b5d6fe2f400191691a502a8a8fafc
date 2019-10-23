@@ -1,0 +1,26 @@
+package main.clases;
+
+import main.clases.tiposEmpleados.TipoEmpleadoInterface;
+import main.clases.tiposEmpleados.jerarquia.JerarquiasEmpleadosEnum;
+
+public class TipoEmpleado implements TipoEmpleadoInterface {
+
+	private static String tipo;
+	
+	private static JerarquiasEmpleadosEnum nivelJerarquia;
+	
+	public TipoEmpleado(String tipoEmpleado, JerarquiasEmpleadosEnum nivelJerarquia) {
+		TipoEmpleado.tipo = tipoEmpleado;
+		TipoEmpleado.nivelJerarquia = nivelJerarquia;
+	}
+	
+	@Override
+	public String recuperarTipoEmpleado() {
+		return this.tipo;
+	}
+
+	@Override
+	public JerarquiasEmpleadosEnum recuperarNivelJerarquia() {
+		return this.nivelJerarquia;
+	}
+}

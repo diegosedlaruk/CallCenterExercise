@@ -1,0 +1,41 @@
+package main.tests;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Director;
+import main.clases.tiposEmpleados.Operador;
+
+public class DiegoTest {
+
+	public static void main(String[] args) {
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		
+		Operador wilfredo = new Operador("Wilfredo", "Rosamonte", "379988912", "AA82JK21");
+		Operador carlos = new Operador("Carlos", "Zapata", "27889110", "BK1990PO");
+		Director capataz = new Director("Lucas", "Gomez", "25118281", "2ACJD112");		
+		
+		empleados.add(wilfredo);
+		empleados.add(carlos);
+		empleados.add(capataz);
+		
+		List<LlamadaCallCenter> llamadas = new ArrayList<LlamadaCallCenter>();
+		
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		llamadas.add(new LlamadaCallCenter());
+		
+		//Id iteracion
+		int i = 0;
+		
+		for(LlamadaCallCenter llamada : llamadas) {
+			CallDispatcher dispatcher = new CallDispatcher(llamada, empleados);
+			System.out.println("El hilo: " + dispatcher.getName() + " esta procesando la llamada: " + llamada.idLlamada() + ". Id de Iteracion: " + i);
+			dispatcher.run();
+		}
+	}
+}

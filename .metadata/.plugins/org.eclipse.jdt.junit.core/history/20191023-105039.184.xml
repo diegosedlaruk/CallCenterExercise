@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CallCenterTest" project="CallCenterAlMundo" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="main.tests.CallCenterTest" time="48.121" displayname="CallCenterTest" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]">
+    <testcase name="operadorAtiendeDosLlamados" classname="main.tests.CallCenterTest" time="22.072" displayname="operadorAtiendeDosLlamados()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:operadorAtiendeDosLlamados()]"/>
+    <testcase name="llamadaDuraEntreCincoDiezSegundos" classname="main.tests.CallCenterTest" time="0.002" displayname="llamadaDuraEntreCincoDiezSegundos()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:llamadaDuraEntreCincoDiezSegundos()]"/>
+    <testcase name="operadorAtiendeLlamadaYNoPuedeAtenderOtra" classname="main.tests.CallCenterTest" time="1.003" displayname="operadorAtiendeLlamadaYNoPuedeAtenderOtra()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:operadorAtiendeLlamadaYNoPuedeAtenderOtra()]"/>
+    <testcase name="dosOperadoresAtiendenUnaLlamadaCadaUno" classname="main.tests.CallCenterTest" time="12.006" displayname="dosOperadoresAtiendenUnaLlamadaCadaUno()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:dosOperadoresAtiendenUnaLlamadaCadaUno()]"/>
+    <testcase name="supervisorNoAtiendeLlamadaPorqueHayOperadoresDisponibles" classname="main.tests.CallCenterTest" time="13.037" displayname="supervisorNoAtiendeLlamadaPorqueHayOperadoresDisponibles()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:supervisorNoAtiendeLlamadaPorqueHayOperadoresDisponibles()]"/>
+  </testsuite>
+</testrun>

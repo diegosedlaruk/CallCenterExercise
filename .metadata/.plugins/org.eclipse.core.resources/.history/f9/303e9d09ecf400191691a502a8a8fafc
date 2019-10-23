@@ -1,0 +1,40 @@
+package main.clases;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+public class CallCenter {
+
+	private List<Empleado> empleados = new ArrayList<Empleado>();
+	
+	public CallCenter(List<Empleado> empleados) {
+		this.empleados = empleados;
+	} 
+	
+	private Empleado getEmpleadoLibre() {
+		
+		Empleado empleadoLibre;
+		
+		List<Empleado> operadoresLibres = this.filter(empleado -> empleado.getTipo().esOperador() && empleado.puedeAtenderLLamada(), this.empleados);
+		
+		//Si no conseguimos operadores libres, buscamos supervisores libres.
+		if(operadoresLibres.isEmpty()) {
+			operadoresLibres = this.filter(empleado -> empleado.getTipo().esSupervisor() && empleado.puedeAtenderLLamada(), empleados);
+
+			//Si no conseguimos operadores libres, buscamos supervisores libres.
+			if(operadoresLibres.isEmpty()) {
+				operadoresLibres = this.filter(empleado -> empleado.getTipo().esDirector() && empleado.puedeAtenderLLamada(), empleados);
+			}
+		}
+		
+		empleadoLibre = !operadoresLibres.isEmpty() ? operadoresLibres.get(0) : null; 
+		
+		return empleadoLibre;
+	}
+	 
+	public List<Empleado> filter(Predicate<Empleado> criteria, List<Empleado> list) {
+	        return list.stream().filter(criteria).collect(Collectors.<Empleado>toList());
+	}
+}

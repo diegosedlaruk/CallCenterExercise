@@ -1,0 +1,20 @@
+package main.tests;
+
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class CallCenterTest {
+
+	@Test
+	void testSuma() {
+		assertEquals(2, 1 + 1);
+	}
+	
+	
+	@Test
+	void testResta() {
+		assertEquals(5, 10 - 2 - 2 - 1);
+	}
+}

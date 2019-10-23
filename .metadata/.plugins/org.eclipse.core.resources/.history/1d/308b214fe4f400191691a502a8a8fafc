@@ -1,0 +1,45 @@
+package main.clases;
+
+import java.util.Date;
+
+import main.clases.tiposEmpleados.TipoEmpleado;
+
+public class Empleado {
+
+	private String nombre;
+	
+	private String apellido;
+	
+	private String dni;
+	
+	private String identificadorEpleado;
+	
+	private TipoEmpleado tipo;
+
+	boolean atendiendoLlamada = false;
+	
+	public Empleado(String nombre, String apellido, String dni, String identificadorEpleado, TipoEmpleado tipo) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.identificadorEpleado = identificadorEpleado;
+		this.tipo = tipo;
+	}
+	
+	boolean puedeAtenderLLamada() {
+		return !atendiendoLlamada;
+	}
+
+	public void atenderLlamada() {
+	
+		Date fecha = new Date();
+		
+		this.atendiendoLlamada = true;
+		
+		
+		
+		
+		this.atendiendoLlamada = false;
+	}
+}

@@ -1,0 +1,29 @@
+package main;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Operador;
+
+public class CallCenter {
+
+	public void procesarLlamadas(List<LlamadaCallCenter> llamadas, ArrayList<Empleado> empleados) {
+			
+		for(LlamadaCallCenter llamada : llamadas) {
+
+			//Un hilo
+			CallDispatcher cd = new CallDispatcher(llamada, empleados);
+			cd.start();
+
+			//1 segundo es lo que tarda una llamada desde que se realiza hasta que encuentra un empleado libre.
+			try {
+				Thread.sleep(1 * 1000);
+			} catch (InterruptedException e) {
+				
+			}	
+		}
+	}	
+}

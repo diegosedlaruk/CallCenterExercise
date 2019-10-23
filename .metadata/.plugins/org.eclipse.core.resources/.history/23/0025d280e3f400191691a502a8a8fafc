@@ -1,0 +1,12 @@
+package main.clases.tiposEmpleados;
+
+import main.clases.tiposEmpleados.jerarquia.JerarquiasEmpleadosEnum;
+
+public class Director extends TipoEmpleado{
+
+	private static final JerarquiasEmpleadosEnum NIVEL_JERARQUIA = JerarquiasEmpleadosEnum.DIRECTOR;
+	
+	public Director() {
+		super("Director", Director.NIVEL_JERARQUIA);
+	}
+}

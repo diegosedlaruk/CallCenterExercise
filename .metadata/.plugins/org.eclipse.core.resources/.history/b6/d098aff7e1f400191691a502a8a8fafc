@@ -1,0 +1,22 @@
+package main.clases.tiposEmpleados.jerarquia;
+
+public enum JerarquiasEmpleadosEnum {  
+	
+	DIRECTOR (1000),
+	SUPERVISOR(900),
+	OPERADOR(800);
+
+	//Valor numérico representando la jerarquía que tiene los distintos cargos. A mayor valor, mas jerarquia.
+    private final int nivelJerarquia;
+
+     JerarquiasEmpleadosEnum (int nivelJerarquia) { 
+
+        this.nivelJerarquia = nivelJerarquia;
+
+    } 
+
+    //Métodos de la clase tipo Enum
+    public int getnivelJerarquia() {
+    	return nivelJerarquia; 
+    }
+}

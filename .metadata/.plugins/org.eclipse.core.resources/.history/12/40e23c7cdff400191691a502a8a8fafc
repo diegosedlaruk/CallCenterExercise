@@ -1,0 +1,14 @@
+package main.clases;
+
+public class TipoEmpleado implements TipoEmpleadoInterface{
+
+	private String tipo;
+	
+	public TipoEmpleado(String tipoEmpleado) {
+		this.tipo = tipoEmpleado;
+	}
+	
+	public String recuperarTipoEmpleado() {
+		return this.tipo;
+	}
+}

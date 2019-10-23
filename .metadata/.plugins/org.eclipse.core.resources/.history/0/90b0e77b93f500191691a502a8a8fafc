@@ -1,0 +1,46 @@
+package main.tests;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import main.clases.CallDispatcher;
+import main.clases.Empleado;
+import main.clases.LlamadaCallCenter;
+import main.clases.tiposEmpleados.Director;
+import main.clases.tiposEmpleados.Operador;
+import main.clases.tiposEmpleados.Supervisor;
+
+public class DiegoTest {
+
+	public static void main(String[] args) {
+
+	
+		LlamadaCallCenter llamada = new LlamadaCallCenter();
+		
+		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+		
+		Operador operadorUno = new Operador("Manuel", "Morello", "29666990", "J90CX");
+		empleados.add(operadorUno);
+		
+		CallDispatcher cd = new CallDispatcher(llamada, empleados);
+		cd.start();
+		
+		try {
+			Thread.sleep(3 * 1000);
+		} catch (InterruptedException e) {
+			
+		}	
+		
+		System.out.println("Id de llamada: " + operadorUno.getIdLlamada());
+		
+		try {
+			Thread.sleep(12 * 1000);
+		} catch (InterruptedException e) {
+			
+		}	
+		
+		System.out.println("Puede Atender: " + operadorUno.puedeAtenderLLamada());
+	
+	
+	}
+}

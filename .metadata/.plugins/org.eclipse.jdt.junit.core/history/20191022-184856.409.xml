@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CallCenterTest" project="CallCenterAlMundo" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="main.tests.CallCenterTest" time="0.052" displayname="CallCenterTest" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]">
+    <testcase name="testResta" classname="main.tests.CallCenterTest" time="0.03" displayname="testResta()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:testResta()]"/>
+    <testcase name="testSuma" classname="main.tests.CallCenterTest" time="0.022" displayname="testSuma()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:testSuma()]"/>
+  </testsuite>
+</testrun>

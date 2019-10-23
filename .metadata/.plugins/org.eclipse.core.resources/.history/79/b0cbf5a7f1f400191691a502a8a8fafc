@@ -1,0 +1,18 @@
+package main.clases.tiposEmpleados;
+
+import main.clases.Empleado;
+import main.clases.tiposEmpleados.jerarquiaEmpleados.JerarquiasEmpleadosEnum;
+
+public class Operador extends Empleado{
+
+	private static final TipoEmpleado tipoEmpleado = new TipoEmpleado("Operador", NIVEL_JERARQUIA);
+	
+	private static final JerarquiasEmpleadosEnum NIVEL_JERARQUIA = JerarquiasEmpleadosEnum.OPERADOR;
+	
+	
+	
+	public Operador(String nombre, String apellido, String dni, String identificadorEpleado, TipoEmpleado tipo) {
+		super(nombre, apellido, dni, identificadorEpleado, tipo);
+		// TODO Auto-generated constructor stub
+	}
+}

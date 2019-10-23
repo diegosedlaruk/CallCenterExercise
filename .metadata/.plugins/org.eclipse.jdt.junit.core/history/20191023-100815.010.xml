@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CallCenterTest" project="CallCenterAlMundo" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="main.tests.CallCenterTest" time="23.055" displayname="CallCenterTest" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]">
+    <testcase name="operadorAtiendeDosLlamados" classname="main.tests.CallCenterTest" time="22.022" displayname="operadorAtiendeDosLlamados()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:operadorAtiendeDosLlamados()]"/>
+    <testcase name="llamadaDuraEntreCincoDiezSegundos" classname="main.tests.CallCenterTest" time="0.003" displayname="llamadaDuraEntreCincoDiezSegundos()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:llamadaDuraEntreCincoDiezSegundos()]"/>
+    <testcase name="operadorAtiendeLlamadaYNoPuedeAtenderOtra" classname="main.tests.CallCenterTest" time="1.03" displayname="operadorAtiendeLlamadaYNoPuedeAtenderOtra()" uniqueid="[engine:junit-jupiter]/[class:main.tests.CallCenterTest]/[method:operadorAtiendeLlamadaYNoPuedeAtenderOtra()]"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,58 @@
+package main.clases;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+public class CallDispatcher {
+	
+	private static final int WAITING_SECONDS = 5;
+	
+	public void atenderLlamado(LlamadaCallCenter llamada, List<Empleado> empleados) {
+		
+		Empleado empleadoLibre = getEmpleadoLibre(empleados);
+		
+		for(int i = 0; i < 10; i++) {
+			
+			if(empleadoLibre != null) {
+				empleadoLibre.atenderLlamada(llamada);	
+			}
+			else {
+				//Esperamos 5 segundos y volvemos a ver si algún empleado se desocupó
+				try {
+					Thread.sleep(WAITING_SECONDS * 1000);
+				} catch (InterruptedException e) {
+					//Cualquier error que haya en la comunicación, imprimimos error y verificamos si 
+					System.out.println("");
+				}
+			}
+		}	
+	}
+			
+	private Empleado getEmpleadoLibre(List<Empleado> empleados) {
+		
+		Empleado empleadoLibre;
+		
+		List<Empleado> operadoresLibres = this.filter(empleado -> empleado.getTipo().esOperador() && empleado.puedeAtenderLLamada(), empleados);
+		
+		//Si no conseguimos operadores libres, buscamos supervisores libres.
+		if(operadoresLibres.isEmpty()) {
+			operadoresLibres = this.filter(empleado -> empleado.getTipo().esSupervisor() && empleado.puedeAtenderLLamada(), empleados);
+
+			//Si no conseguimos operadores libres, buscamos supervisores libres.
+			if(operadoresLibres.isEmpty()) {
+				operadoresLibres = this.filter(empleado -> empleado.getTipo().esDirector() && empleado.puedeAtenderLLamada(), empleados);
+			}
+		}
+		
+		empleadoLibre = !operadoresLibres.isEmpty() ? operadoresLibres.get(0) : null; 
+		
+		return empleadoLibre;
+	}
+	 
+	private List<Empleado> filter(Predicate<Empleado> criteria, List<Empleado> list) {
+	        return list.stream().filter(criteria).collect(Collectors.<Empleado>toList());
+	}
+}

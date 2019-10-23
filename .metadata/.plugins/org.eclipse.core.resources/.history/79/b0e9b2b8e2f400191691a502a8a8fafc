@@ -1,0 +1,12 @@
+package main.clases.tiposEmpleados;
+
+import main.clases.TipoEmpleado;
+
+public class Operador extends TipoEmpleado{
+
+	private static final long NIVEL_JERARQUIA = 100;
+	
+	public Operador() {
+		super("Operador");
+	}
+}

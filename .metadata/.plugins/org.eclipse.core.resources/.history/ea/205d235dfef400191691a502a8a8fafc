@@ -1,0 +1,22 @@
+package main.tests;
+
+import java.util.ArrayList;
+import java.util.List;
+import main.clases.Empleado;
+import main.clases.tiposEmpleados.Operador;
+
+public class DiegoTest {
+
+	public static void main(String[] args) {
+		
+		List<Empleado> empleados = new ArrayList<Empleado>();
+		
+		Operador wilfredo = new Operador("Wilfredo", "Rosamonte", "379988912", "AA82JK21");
+		
+		Operador carlos = new Operador("Carlos", "Zapata", "27889110", "BK1990PO");
+		
+		empleados.add(operador);
+		
+		
+	}
+}

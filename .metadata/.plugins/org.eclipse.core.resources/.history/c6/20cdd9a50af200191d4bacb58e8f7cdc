@@ -1,0 +1,75 @@
+package testing;
+
+public class TestClass {
+
+	private int countingValleys(int n, String s) {
+
+        int seaLevel = 0;
+
+        int qtyValleys = 0;
+
+        int i;
+
+        System.out.println("Cantidad de Pasos: " + n);
+        System.out.println("Recorrido: " + s);
+        
+        
+        for(i = 0; i < s.length(); i ++){
+
+            char step = s.charAt(i);
+
+            if(step == 'D' && seaLevel == 0){
+
+                seaLevel -= 1;
+                qtyValleys += 1;
+
+                //En esta parte itero el valle, hasta llegar de nuevo al nivel del mar
+                //Para no volver a contar ese valle.
+                int j;
+                for(j = i + 1; seaLevel < 0; j++){
+                    
+                    char valleyStep = s.charAt(j);
+
+                    if(valleyStep == 'D'){
+                        seaLevel -= 1;
+                    }else{
+                        seaLevel += 1;
+                    }
+                }
+                i = j;
+
+            }else if(step == 'U' && seaLevel == 0){
+                
+                seaLevel += 1;
+
+                int k;
+
+                for(k = i + 1; seaLevel > 0; k++){
+
+                    char mountainStep = s.charAt(k);
+
+                    if(mountainStep == 'U'){
+                        seaLevel += 1;
+                    }else{
+                        seaLevel -= 1;
+                    }
+                }
+
+                i = k;
+            }            
+        }
+
+        return qtyValleys;
+    }
+	
+	public void main(String[] args) {
+		
+		int pasos = 8;
+		
+		String recorrido = "";
+		
+		this.countingValleys(pasos, recorrido);
+		
+	}
+	
+}

@@ -1,0 +1,71 @@
+package main.clases;
+
+import main.clases.tiposEmpleados.TipoEmpleado;
+
+public class Empleado {
+
+	private String nombre;
+
+	private String apellido;
+
+	private String dni;
+
+	private String identificadorEpleado;
+
+	private TipoEmpleado tipo;
+
+	private boolean atendiendoLlamada = false;
+
+	public Empleado(String nombre, String apellido, String dni, String identificadorEpleado, TipoEmpleado tipo) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.identificadorEpleado = identificadorEpleado;
+		this.tipo = tipo;
+	}
+
+	boolean puedeAtenderLLamada() {
+		return !atendiendoLlamada;
+	}
+
+	public void atenderLlamada(LlamadaCallCenter llamada) {
+
+		//El usuario
+		this.atendiendoLlamada = true;
+
+		//Atendemos la llamada.
+		this.atendiendoLlamada(llamada.getDuracionLlamada());
+		
+		this.atendiendoLlamada = false;
+	}
+
+	private void atendiendoLlamada(int duracionLlamada) {
+				
+		try {
+			Thread.sleep(duracionLlamada * 1000);
+		} catch (InterruptedException e) {
+			//Cualquier error que haya en la comunicación, el empleado debe cortar para no dejar la línea ocupada.
+			this.atendiendoLlamada = false;
+		}
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public String getIdentificadorEpleado() {
+		return identificadorEpleado;
+	}
+
+	public TipoEmpleado getTipo() {
+		return tipo;
+	}
+}
